@@ -6,7 +6,9 @@ const TopNav = () => {
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand as={Link} to="/">RUstagram</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/" style={{fontFamily: "'Grand Hotel', cursive", fontSize: "xx-large"}}>
+                    RUstagram
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
