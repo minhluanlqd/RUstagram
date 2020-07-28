@@ -1,6 +1,6 @@
 import React from 'react';
 import {Nav, Navbar} from 'react-bootstrap';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 const TopNav = () => {
     return (
@@ -14,6 +14,7 @@ const TopNav = () => {
                     <Nav className="ml-auto">
                         <Nav.Link as={Link} to="/signin">Sign In</Nav.Link>
                         <Nav.Link as={Link} to="/signup">Sign Up</Nav.Link>
+                        <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
                         {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
