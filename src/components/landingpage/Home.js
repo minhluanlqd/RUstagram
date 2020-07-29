@@ -1,10 +1,21 @@
 import React from 'react';
+import CardPost from '../CardPost/CardPost';
+
+// styling in App.css
 
 const Home = () => {
     return(
-        <h1 className="">
-
-        </h1>
+        <div className="homeID">
+            <div className="home">
+                <CardPost/>
+            </div>
+            <div className="home">
+                <CardPost/>
+            </div>
+            <div className="home">
+                <CardPost/>
+            </div>
+        </div>
     );
 }
 

@@ -7,6 +7,7 @@ import Home from './components/landingpage/Home';
 import SignIn from './components/landingpage/SignIn';
 import SignUp from './components/landingpage/SignUp';
 import Profile from './components/landingpage/Profile';
+import CreatePost from './components/CardPost/CreatePost';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
        </Route>
        <Route path="/profile">
           <Profile/>
+       </Route>
+       <Route path="/create">
+          <CreatePost/>
        </Route>
     </BrowserRouter>
   );
