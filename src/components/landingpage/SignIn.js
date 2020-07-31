@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -59,7 +59,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-
+  
+  // const [name, setName] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />

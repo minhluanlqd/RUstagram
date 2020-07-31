@@ -1,30 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-// import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 import {Link} from 'react-router-dom';
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import axios from 'axios';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,6 +42,54 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [message, setMesage] = useState("");
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+  const handleCloseError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenError(false);
+  };
+  // Function POST Data:
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      name: name,
+      email: email,
+      password: password
+    }
+
+    axios.post("http://localhost:5000/signup", data, {headers: {'Content-Type': 'application/json'}})
+        .then(res => {
+          console.log(res);
+          if(res.status === 200){
+            console.log("Sign Up Successfully");
+            setMesage("Sign Up Successfully");
+            setOpen(true);
+          }
+        })
+        .catch(error => {
+          setMesage(error.response.statusText + ` => Error code ${error.response.status}`);
+          console.log(error);
+          console.log(message);
+          console.log("User already exists");
+          setOpenError(true);
+        });
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,29 +100,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Full Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                value={name}
+                onChange={e => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,6 +125,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -102,17 +136,14 @@ export default function SignUp() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type="password"   /// Usually PASSWORD IS: 12345
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid> */}
+            
           </Grid>
           <Button
             type="submit"
@@ -123,6 +154,18 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
+
+          <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              {message}
+            </Alert>
+          </Snackbar>
+          <Snackbar open={openError} autoHideDuration={5000} onClose={handleCloseError}>
+            <Alert onClose={handleCloseError} severity="error">
+              {message}
+            </Alert>
+          </Snackbar>
+
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/signin" variant="body2">

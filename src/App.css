@@ -18,3 +18,16 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.create-post-form{
+    height: 450px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey;
+    width: 70%;
+    border-radius: 30px;
+    box-shadow: 3px 5px 5px 3px #888888;
+}
