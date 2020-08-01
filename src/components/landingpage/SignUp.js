@@ -9,15 +9,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,30 +36,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+toast.configure();
+
 export default function SignUp() {
   const classes = useStyles();
 
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [open, setOpen] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [message, setMesage] = useState("");
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-  const handleCloseError = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenError(false);
-  };
+  const history = useHistory();
+  
   // Function POST Data:
   const onSubmit = (e) => {
     e.preventDefault();
@@ -71,22 +55,23 @@ export default function SignUp() {
       email: email,
       password: password
     }
+    if(!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+      toast.error("Invalid Email");
+      return;
+    }
 
     axios.post("http://localhost:5000/signup", data, {headers: {'Content-Type': 'application/json'}})
         .then(res => {
           console.log(res);
           if(res.status === 200){
             console.log("Sign Up Successfully");
-            setMesage("Sign Up Successfully");
-            setOpen(true);
+            toast.success("Sign Up Successfully");
+            history.push('/signin');
           }
         })
         .catch(error => {
-          setMesage(error.response.statusText + ` => Error code ${error.response.status}`);
-          console.log(error);
-          console.log(message);
-          console.log("User already exists");
-          setOpenError(true);
+          console.log(error.response.data.error);
+          toast.error(error.response.data.error);
         });
   }
 
@@ -154,17 +139,6 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
-
-          <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success">
-              {message}
-            </Alert>
-          </Snackbar>
-          <Snackbar open={openError} autoHideDuration={5000} onClose={handleCloseError}>
-            <Alert onClose={handleCloseError} severity="error">
-              {message}
-            </Alert>
-          </Snackbar>
 
           <Grid container justify="flex-end">
             <Grid item>
