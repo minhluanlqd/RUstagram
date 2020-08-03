@@ -17,6 +17,7 @@ const TopNav = () => {
                     <Nav className="ml-auto">
                         <Nav.Link as={Link} to="/signin" onClick={() => setExpanded(false)}>Sign In</Nav.Link>
                         <Nav.Link as={Link} to="/signup" onClick={() => setExpanded(false)}>Sign Up</Nav.Link>
+                        <Nav.Link as={Link} to="/create" onClick={() => setExpanded(false)}>Create Post</Nav.Link>
                         <Nav.Link as={Link} to="/profile" onClick={() => setExpanded(false)}>Profile</Nav.Link>
                         {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

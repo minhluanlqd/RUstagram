@@ -74,6 +74,9 @@ export default function SignIn() {
           console.log(res);
           if(res.status === 200){
             console.log("Sign In Successfully");
+            // store data
+            localStorage.setItem("jwt", res.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
             toast.success("Sign In Successfully");
             history.push('/');
           }
