@@ -59,7 +59,7 @@ router.post('/signin', (req, res) => {
                 .then(isMatched => {
                     if(isMatched){
                         // res.json({message: "Successfully sign in"});
-                        const token = jwt.sign({_id: savedUser._id}, JWTSecret);
+                        const token = jwt.sign({_id: savedUser._id}, JWTSecret, {expiresIn: '2h'});
                         const {_id, email, name} = savedUser;
                         res.json({token, user:{_id, email, name}})
                     }else{

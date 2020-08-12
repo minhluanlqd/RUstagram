@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {UserContext} from '../../App';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const {state, dispatch} = useContext(UserContext);
   const classes = useStyles();
   
   const [password, setPassword] = useState("");
@@ -77,6 +79,7 @@ export default function SignIn() {
             // store data
             localStorage.setItem("jwt", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
+            dispatch({type: "USER", payload:data.user});
             toast.success("Sign In Successfully");
             history.push('/');
           }
