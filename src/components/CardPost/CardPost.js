@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Home() {
+export default function Home({img, title, body, postedBy}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [loved, setLoved] = React.useState(false);
@@ -72,20 +72,20 @@ export default function Home() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Title" // Title
+        title={title} // Title
         subheader="September 14, 2016" // Date
       />
+      <h5>{postedBy}</h5>
       <CardMedia
         className={classes.media}
-        image="https://images.unsplash.com/photo-1595538154519-bc102fd25a97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+        image={img} // img
         title="Title"
       />
 
       {/* Body */}
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          {body}
         </Typography>
       </CardContent>
 
