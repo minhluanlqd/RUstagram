@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const JWTSecret = "823uienvujbvp4g936967**/398u8t43";
 const mongoose = require('mongoose');
-const User = mongoose.model("User");
+const User = require("../models/user");
 
 module.exports = (req, res, next) => {
     let token;
